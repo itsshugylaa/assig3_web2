@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tasks App</title>
+</head>
+<body>
+  <h2>Add Task</h2>
+
+  <input id="title" placeholder="Title" />
+  <input id="description" placeholder="Description" />
+  <select id="priority">
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select>
+
+  <button onclick="addTask()">Add</button>
+
+  <h2>Tasks</h2>
+  <ul id="tasks"></ul>
+
+  <script>
+    async function loadTasks() {
+      const res = await fetch("http://localhost:3000/tasks");
+      const data = await res.json();
+      document.getElementById("tasks").innerHTML =
+        data.map(t => `<li>${t.title} (${t.priority})</li>`).join("");
+    }
+
+    async function addTask() {
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      const priority = document.getElementById("priority").value;
+
+      await fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, description, priority })
+      });
+
+      loadTasks();
+    }
+
+    loadTasks();
+  </script>
+</body>
+</html>
