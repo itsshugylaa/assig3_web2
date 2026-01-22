@@ -37,8 +37,7 @@ assignment3_tasks/
 ├── server.js         
 ├── index.html        
 ├── package.json      
-├── package-lock.json 
-└── README.md          
+└── package-lock.json          
 
 ```
 
